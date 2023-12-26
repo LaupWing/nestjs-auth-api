@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: nestjs_auth
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+  # mysql:
+  #   image: mysql:latest
+  #   environment:
+  #     - MYSQL_DATABASE=shortlink
+  #     - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+  #   ports:
+  #     - 3306:3306
+  #   volumes:
+  #     - host-db:/var/lib/mysql
+# volumes:
+#   host-db:
