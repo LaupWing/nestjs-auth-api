@@ -10,21 +10,14 @@ datasource db {
    url      = env("DATABASE_URL")
 }
 
-// schema.prisma
-
-// User entity representing users of your application
 model User {
-   id       Int    @id @default(autoincrement())
-   username String @unique
-   email    String @unique
-   // Add other user-related fields as needed
-   // ...
-
-   // Define a many-to-many relationship with APIs through the User_Role entity
-   roles User_Role[]
+   id       Int         @id @default(autoincrement())
+   username String      @unique
+   email    String      @unique
+   roles    User_Role[]
+   Session  Session[]
 }
 
-// API entity representing the APIs in your system
 model Api {
    id    Int         @id @default(autoincrement())
    name  String
@@ -42,4 +35,12 @@ model User_Role {
    api        Api      @relation(fields: [api_id], references: [id])
 
    @@unique([user_id, api_id])
+}
+
+model Session {
+   id      Int      @id @default(autoincrement())
+   user_id Int
+   token   String
+   expires DateTime
+   user    User     @relation(fields: [user_id], references: [id])
 }
