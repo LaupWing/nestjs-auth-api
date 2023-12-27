@@ -36,7 +36,9 @@ export class AuthService {
          return null
       }
       
-      bcrypt.compare(password, user.password)
+      const result = await bcrypt.compare(password, user.password)
+      console.log(result)
+      
       return `This action removes a #${username} auth`
    }
 }
