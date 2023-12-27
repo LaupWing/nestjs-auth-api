@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common"
 import { CreateAuthDto } from "./dto/create-auth.dto"
 import { UpdateAuthDto } from "./dto/update-auth.dto"
 import { UsersService } from "src/users/users.service"
+import bcrypt from "bcrypt"
 
 @Injectable()
 export class AuthService {
@@ -34,6 +35,8 @@ export class AuthService {
       if (!user) {
          return null
       }
+
+      bcrypt.compare(password, user.password)
       return `This action removes a #${username} auth`
    }
 }
