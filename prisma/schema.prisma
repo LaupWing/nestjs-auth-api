@@ -18,6 +18,12 @@ model User {
    Session  Session[]
 }
 
+enum Access {
+   READ_ONLY
+   READ_WRITE
+   ADMIN
+}
+
 model Api {
    id    Int         @id @default(autoincrement())
    name  String
@@ -29,7 +35,7 @@ model User_Role {
    id         Int      @id @default(autoincrement())
    user_id    Int
    api_id     Int
-   access     String
+   access     Access
    created_at DateTime @default(now())
    user       User     @relation(fields: [user_id], references: [id])
    api        Api      @relation(fields: [api_id], references: [id])
