@@ -2,10 +2,49 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+   provider = "mysql"
+   url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// User entity representing users of your application
+model User {
+   id       Int    @id @default(autoincrement())
+   username String @unique
+   email    String @unique
+   // Add other user-related fields as needed
+   // ...
+
+   // Define a many-to-many relationship with APIs through the User_Role entity
+   roles User_Role[]
+}
+
+// API entity representing the APIs in your system
+model Api {
+   id       Int    @id @default(autoincrement())
+   api_name String
+   // Add other API-related fields as needed
+   // ...
+
+   // Define a many-to-many relationship with users through the User_Role entity
+   roles User_Role[]
+}
+
+// User_Role entity representing the relationship between users and APIs
+// This entity includes the access level or permissions a user has for a specific API
+model User_Role {
+   id         Int      @id @default(autoincrement())
+   user_id    Int
+   api_id     Int
+   access     String
+   created_at DateTime @default(now())
+   user User @relation(fields: [user_id], references: [id])
+   api  Api  @relation(fields: [api_id], references: [id])
+
+   @@unique([user_id, api_id])
 }
