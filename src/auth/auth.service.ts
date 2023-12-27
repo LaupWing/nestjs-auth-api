@@ -1,9 +1,14 @@
 import { Injectable } from "@nestjs/common"
 import { CreateAuthDto } from "./dto/create-auth.dto"
 import { UpdateAuthDto } from "./dto/update-auth.dto"
+import { UsersService } from "src/users/users.service"
 
 @Injectable()
 export class AuthService {
+   constructor(
+      private readonly use_service: UsersService
+   ) {}
+
    create(createAuthDto: CreateAuthDto) {
       return "This action adds a new auth"
    }
@@ -22,5 +27,13 @@ export class AuthService {
 
    remove(id: number) {
       return `This action removes a #${id} auth`
+   }
+
+   async signIn(username: string, password: string) {
+      const user = await this.use_service.findOne(username)
+      if (!user) {
+         return null
+      }
+      return `This action removes a #${username} auth`
    }
 }
