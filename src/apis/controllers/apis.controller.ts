@@ -7,9 +7,9 @@ import {
    Param,
    Delete,
 } from "@nestjs/common"
-import { ApisService } from "./apis.service"
-import { CreateApiDto } from "./dto/create-api.dto"
-import { UpdateApiDto } from "./dto/update-api.dto"
+import { ApisService } from "../providers/apis.service"
+import { CreateApiDto } from "../dto/create-api.dto"
+import { UpdateApiDto } from "../dto/update-api.dto"
 
 @Controller("apis")
 export class ApisController {
