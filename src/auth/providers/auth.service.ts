@@ -42,7 +42,10 @@ export class AuthService {
       if (!checking) {
          throw new UnauthorizedException()
       }
+      const payload = { email: user.email, sub: user.id }
       
-      return `This action removes a #${sign_in_auth_dto.email} auth`
+      return {
+         access_token: await this.jwt_service.sign(payload)
+      }
    }
 }
