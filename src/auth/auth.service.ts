@@ -3,11 +3,13 @@ import { UpdateAuthDto } from "./dto/update-auth.dto"
 import { UsersService } from "src/users/users.service"
 import * as bcrypt from "bcrypt"
 import { SignInAuthDto } from "./dto/signin-auth-dto"
+import { JwtService } from "@nestjs/jwt"
 
 @Injectable()
 export class AuthService {
    constructor(
-      private readonly use_service: UsersService
+      private readonly use_service: UsersService,
+      private jwt_service: JwtService
    ) {}
    
    findAll() {
