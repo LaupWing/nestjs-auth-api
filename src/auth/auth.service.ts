@@ -7,7 +7,7 @@ import { SignInAuthDto } from "./dto/signin-auth-dto"
 @Injectable()
 export class AuthService {
    constructor(
-      // private readonly use_service: UsersService
+      private readonly use_service: UsersService
    ) {}
    
    findAll() {
@@ -26,19 +26,19 @@ export class AuthService {
       return `This action removes a #${id} auth`
    }
 
-   async signIn(signInAuthDto: SignInAuthDto) {
-      // const user = await this.use_service.findOne(signInAuthDto.email)
-      // if (!user) {
-      //    return null
-      // }
+   async signIn(sign_in_auth_dto: SignInAuthDto) {
+      const user = await this.use_service.findOne(sign_in_auth_dto.email)
+      if (!user) {
+         return null
+      }
       
-      // const checking = await bcrypt.compare(signInAuthDto.password, user.password)
-      // console.log(checking)
+      const checking = await bcrypt.compare(sign_in_auth_dto.password, user.password)
+      console.log(checking)
 
-      // if (checking) {
-      //    throw new UnauthorizedException()
-      // }
+      if (checking) {
+         throw new UnauthorizedException()
+      }
       
-      return `This action removes a #${signInAuthDto.email} auth`
+      return `This action removes a #${sign_in_auth_dto.email} auth`
    }
 }
