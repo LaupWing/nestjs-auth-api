@@ -30,8 +30,7 @@ export class AuthService {
 
    async signIn(sign_in_auth_dto: SignInAuthDto) {
       const user = await this.use_service.findOne(sign_in_auth_dto.email)
-      console.log(user)
-      console.log(sign_in_auth_dto)
+      
       if (!user) {
          return null
       }
@@ -45,7 +44,7 @@ export class AuthService {
       const payload = { email: user.email, sub: user.id }
       
       return {
-         access_token: await this.jwt_service.sign(payload)
+         access_token: await this.jwt_service.signAsync(payload)
       }
    }
 }
