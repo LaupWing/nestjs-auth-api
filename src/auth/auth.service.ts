@@ -1,5 +1,4 @@
-import { Injectable } from "@nestjs/common"
-import { CreateAuthDto } from "./dto/create-auth.dto"
+import { Injectable, UnauthorizedException } from "@nestjs/common"
 import { UpdateAuthDto } from "./dto/update-auth.dto"
 import { UsersService } from "src/users/users.service"
 import bcrypt from "bcrypt"
@@ -33,8 +32,12 @@ export class AuthService {
          return null
       }
       
-      const result = await bcrypt.compare(signInAuthDto.password, user.password)
-      console.log(result)
+      const checking = await bcrypt.compare(signInAuthDto.password, user.password)
+      console.log(checking)
+
+      if (checking) {
+         throw new UnauthorizedException()
+      }
       
       return `This action removes a #${signInAuthDto.email} auth`
    }
