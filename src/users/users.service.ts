@@ -15,11 +15,10 @@ export class UsersService {
       return `This action returns all users`
    }
 
-   findOne(username: string) {
-      console.log(username)
+   findOne(email: string) {
       return this.prisma.user.findUnique({
          where: {
-            username
+            email
          },
       })
    }
