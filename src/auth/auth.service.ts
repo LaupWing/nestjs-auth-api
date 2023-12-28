@@ -37,7 +37,7 @@ export class AuthService {
       const checking = await bcrypt.compare(sign_in_auth_dto.password, user.password)
       console.log(checking)
 
-      if (checking) {
+      if (!checking) {
          throw new UnauthorizedException()
       }
       
