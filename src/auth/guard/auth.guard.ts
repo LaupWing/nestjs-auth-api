@@ -10,11 +10,9 @@ export class AuthGuard implements CanActivate {
    ): Promise<boolean> {
       const request = context.switchToHttp().getRequest()
       const token = this.extractTokenFromHeader(request)
-      console.log(token)
       if (!token) {
          throw new UnauthorizedException()
       }
-
       try {
          const payload = await this.jwt_service.verifyAsync(
             token,
@@ -22,7 +20,6 @@ export class AuthGuard implements CanActivate {
                secret: "secret"
             }
          )
-
          request.user = payload
       } catch {
          throw new UnauthorizedException()

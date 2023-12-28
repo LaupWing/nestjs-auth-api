@@ -30,13 +30,10 @@ export class AuthService {
 
    async signIn(sign_in_auth_dto: SignInAuthDto) {
       const user = await this.use_service.findOne(sign_in_auth_dto.email)
-      
       if (!user) {
          return null
       }
-      
       const checking = await bcrypt.compare(sign_in_auth_dto.password, user.password)
-      console.log(checking)
 
       if (!checking) {
          throw new UnauthorizedException()
