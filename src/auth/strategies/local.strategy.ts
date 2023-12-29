@@ -1,18 +1,23 @@
 import { Strategy } from "passport-local"
 import { PassportStrategy } from "@nestjs/passport"
-import { Injectable } from "@nestjs/common"
+import { Injectable, UnauthorizedException } from "@nestjs/common"
+import { AuthService } from "../providers/auth.service"
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
-   constructor() {
+   constructor(
+      private auth_service: AuthService
+   ) {
       super({
          usernameField: "email"
       })
    }
 
    async validate(email: string, password: string): Promise<any> {
-      // Add your validation logic here
-      // For example, check if the username and password are valid
-      // and return the user object if they are valid
+      const user = await this.auth_service.validateUser(email, password)
+      if (!user) {
+         throw new UnauthorizedException()
+      }
+      return user
    }
 }
